@@ -1,6 +1,6 @@
 package 五目並べAI;
 
-public class GameBoard {
+public class GameBoard implements GameBoard_I{
 	public enum Koma{
 		first,
 		late,
@@ -30,6 +30,7 @@ public class GameBoard {
 			 *row = 7
 			 *col = 9
 			 */
+	@Override
 	public void firstHand(int a) {
 		if(gameBoard[縦 - 1][a-1] == Koma.nothing) {
 			gameBoard[Addable[a-1]][a-1] = Koma.first;
@@ -37,11 +38,22 @@ public class GameBoard {
 		}
 		if(Addable[a] >= 縦) {}
 	}
+	@Override
 	public void lateHand(int a) {
 		if(gameBoard[縦 - 1][a-1] == Koma.nothing) {
 			gameBoard[Addable[a-1]][a-1] = Koma.late;
 			Addable[a-1]++;
 		}
+	}
+	@Override
+	public Koma[][] getGameBoard(){
+		Koma[][] Board = new Koma[縦][横];
+		for(int i = 0;i < 縦;i++) {
+			for(int k = 0;k < 横;k++) {
+				Board[i][k] = this.gameBoard[i][k];
+			}
+		}
+		return Board;
 	}
 	private boolean first_is_win_row(int row,int col,int times){
 		if(times == 5) {return true;}
