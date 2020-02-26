@@ -26,8 +26,9 @@ public class GameBoard implements GameBoard_I{
 			 *○○○○○○○○○
 			 *○○○○○○○○○
 			 *○○○○○○○○○
-			 *hight:7
+			 *height:7
 			 *width:9
+			 *原点は左上
 			 */
 	@Override
 	public void firstHand(int a) {
@@ -43,6 +44,7 @@ public class GameBoard implements GameBoard_I{
 			gameBoard[Addable[a-1]][a-1] = Koma.late;
 			Addable[a-1]++;
 		}
+		if(Addable[a] >= height) {}
 	}
 	public Koma getGameBoard(int i,int j){	
 		return  this.gameBoard[i][j];
@@ -90,7 +92,7 @@ public class GameBoard implements GameBoard_I{
 	//左下から右斜め上方向に舐めて判定
 	private boolean first_is_win_Diagonal_row(int row,int col,int times) {
 		if(times == 5) {return true;}
-		if(row == height||row == -1) {return false;}
+		if(row == -1) {return false;}
 		if(gameBoard[row][col] == Koma.first) {
 			return first_is_win_Diagonal_row(row - 1,col + 1,times + 1);
 		}
@@ -100,6 +102,28 @@ public class GameBoard implements GameBoard_I{
 	}
 	private boolean first_is_win_Diagonal_col(int row,int col,int times) {
 		if(times == 5) {return true;}
+		if(col == -1) {return false;}
+		if(gameBoard[row][col] == Koma.first) {
+			return first_is_win_Diagonal_col(row - 1,col + 1,times + 1);
+		}
+		else {
+			return first_is_win_Diagonal_col(row - 1,col + 1,0);
+		}
+	}
+	private boolean late_is_win_Diagonal_row(int row,int col,int times) {
+		if(times == 5) {return true;}
+		if(row == -1) {return false;}
+		if(gameBoard[row][col] == Koma.late) {
+			return late_is_win_Diagonal_row(row - 1,col + 1,times + 1);
+		}
+		else {
+			return late_is_win_Diagonal_row(row - 1,col + 1,times + 1);
+		}
+	}
+	private boolean late_is_winDiagonal_col(int row,int col,int times) {
+		if(times == 5) {return true;}
+		if(col == -1) {return false;}
+		
 	}
 	@Override
 	public boolean isEndGame(){
@@ -109,7 +133,8 @@ public class GameBoard implements GameBoard_I{
 		for(int row = 0;row < height;row++) {
 			if(first_is_win_col(row,0,0)||late_is_win_col(row,0,0)) {return true;}
 		}
-		
+		for(int col = 0;col < width;col++) {}
+		for(int row = 0;row < height;row++) {}
 		return false;
 	}
 
